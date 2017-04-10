@@ -11,7 +11,10 @@ Parameters:
   SourceBranchName:
     Type: String
     Default: master
-
+  SourceRepositoryOwner:
+    Type: String
+  SourceOAuthToken:
+    Type: String
 Resources:
   ArtifactsBucket:
     Type: AWS::S3::Bucket
@@ -93,10 +96,7 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AdministratorAccess
 
-  CodeCommitRepository:
-    Type: AWS::CodeCommit::Repository
-    Properties:
-      RepositoryName: !Ref SourceRepositoryName
+
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
@@ -129,12 +129,14 @@ Resources:
             - Name: Source
               ActionTypeId:
                 Category: Source
-                Owner: AWS
-                Provider: CodeCommit
+                Owner: ThirdParty
+                Provider: GitHub
                 Version: 1
               Configuration:
-                RepositoryName: !Ref SourceRepositoryName
-                BranchName: !Ref SourceBranchName
+                Owner: !Ref SourceRepositoryOwner
+                Branch: !Ref SourceBranchName
+                Repo: !Ref SourceRepositoryName
+                OAuthToken: !Ref SourceOAuthToken
               OutputArtifacts:
                 - Name: SourceOutput
         - Name: PipelineDeploy
@@ -194,6 +196,3 @@ Outputs:
     Export:
       Name: PipelineArtifactsBucket
 
-  RepositoryURL:
-    Description: SSH URL of the repository
-    Value: !GetAtt CodeCommitRepository.CloneUrlSsh
