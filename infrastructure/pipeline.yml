@@ -4,10 +4,8 @@ Description: CD pipeline for my Lambda project
 Parameters:
   ProjectName:
     Type: String
-    Default: lambda-pipeline
   SourceRepositoryName:
     Type: String
-    Default: lambda-pipeline
   SourceBranchName:
     Type: String
     Default: master
@@ -138,22 +136,6 @@ Resources:
                 Repo: !Ref SourceRepositoryName
                 OAuthToken: !Ref SourceOAuthToken
               OutputArtifacts:
-                - Name: SourceOutput
-        - Name: PipelineDeploy
-          Actions:
-            - Name: CreateUpdatePipeline
-              ActionTypeId:
-                Category: Deploy
-                Owner: AWS
-                Provider: CloudFormation
-                Version: 1
-              Configuration:
-                ActionMode: CREATE_UPDATE
-                Capabilities: CAPABILITY_IAM
-                RoleArn: !GetAtt CloudFormationRole.Arn
-                StackName: !Ref AWS::StackName
-                TemplatePath: SourceOutput::infrastructure/pipeline.yml
-              InputArtifacts:
                 - Name: SourceOutput
         - Name: Build
           Actions:
