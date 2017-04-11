@@ -5,6 +5,10 @@ Parameters:
   DeploymentPackageKey:
     Type: String
     Description: An S3 object key pointing of a ZIP file, an archive of everything that is needed to run the Lambda function. It is the output of the Build stage of the pipeline.
+  Environment:
+    Type: String
+  ProjectName:
+    Type: String
 
 Resources:
   LambdaRunnerRole:
@@ -29,7 +33,9 @@ Resources:
       Code:
         S3Bucket: !ImportValue PipelineArtifactsBucket
         S3Key: !Ref DeploymentPackageKey
-      FunctionName: my-lambda-function
+      FunctionName: !Sub 
+        - '${ProjectName}-lambda-${Environment}'
+        - { ProjectName: !Ref ProjectName, Environment: !Ref Environment }
       Handler: main.handler
       Role: !GetAtt LambdaRunnerRole.Arn
       Runtime: python2.7
