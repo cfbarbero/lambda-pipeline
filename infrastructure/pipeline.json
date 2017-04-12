@@ -81,8 +81,8 @@
               "ChangeSetName": "Changeset1",
               "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R",
               "StackName": "cb-lambda-pipeline-app-dev",
-              "TemplateConfiguration": "SourceOutput::dev-configuration.json",
-              "TemplatePath": "BuildOutput::compiled_template.yml"
+              "TemplateConfiguration": "SourceOutput::infrastructure/dev-stack-configuration.json",
+              "TemplatePath": "BuildOutput::compiled_template.yaml"
             },
             "runOrder": 1
           },
@@ -128,8 +128,8 @@
               "ChangeSetName": "Changeset1",
               "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R",
               "StackName": "cb-lambda-pipeline-app-qa",
-              "TemplateConfiguration": "SourceOutput::qa-configuration.json",
-              "TemplatePath": "BuildOutput::compiled_template.yml"
+              "TemplateConfiguration": "SourceOutput::infrastructure/qa-stack-configuration.json",
+              "TemplatePath": "BuildOutput::compiled_template.yaml"
             },
             "runOrder": 1
           },

@@ -14,6 +14,5 @@ Resources:
         - '${ProjectName}-lambda-${Environment}'
         - { ProjectName: !Ref ProjectName, Environment: !Ref Environment }
       Handler: main.handler
-      Role: !GetAtt LambdaRunnerRole.Arn
       Runtime: python2.7
       CodeUri: ./app      
