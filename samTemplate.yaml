@@ -1,0 +1,19 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: A hello world application.
+Parameters:
+  Environment:
+    Type: String
+  ProjectName:
+    Type: String
+Resources:
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub 
+        - '${ProjectName}-lambda-${Environment}'
+        - { ProjectName: !Ref ProjectName, Environment: !Ref Environment }
+      Handler: main.handler
+      Role: !GetAtt LambdaRunnerRole.Arn
+      Runtime: python2.7
+      CodeUri: ./app      

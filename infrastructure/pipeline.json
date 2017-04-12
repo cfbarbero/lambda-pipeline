@@ -1,0 +1,162 @@
+{
+  "pipeline": {
+    "roleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CodePipelineRole-1X62OPECFG7RB",
+    "stages": [
+      {
+        "name": "Source",
+        "actions": [
+          {
+            "inputArtifacts": [],
+            "name": "Source",
+            "actionTypeId": {
+              "category": "Source",
+              "owner": "ThirdParty",
+              "version": "1",
+              "provider": "GitHub"
+            },
+            "outputArtifacts": [
+              {
+                "name": "SourceOutput"
+              }
+            ],
+            "configuration": {
+              "Owner": "cfbarbero",
+              "Repo": "lambda-pipeline",
+              "Branch": "master",
+              "OAuthToken": "****"
+            },
+            "runOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "Build",
+        "actions": [
+          {
+            "inputArtifacts": [
+              {
+                "name": "SourceOutput"
+              }
+            ],
+            "name": "BuildAndTest",
+            "actionTypeId": {
+              "category": "Build",
+              "owner": "AWS",
+              "version": "1",
+              "provider": "CodeBuild"
+            },
+            "outputArtifacts": [
+              {
+                "name": "BuildOutput"
+              }
+            ],
+            "configuration": {
+              "ProjectName": "cb-lambda-pipeline"
+            },
+            "runOrder": 1
+          }
+        ]
+      },
+      {
+        "name": "DEV",
+        "actions": [
+          {
+            "inputArtifacts": [
+              {
+                "name": "SourceOutput"
+              },
+              {
+                "name": "BuildOutput"
+              }
+            ],
+            "name": "CreateChangeSet",
+            "actionTypeId": {
+              "category": "Deploy",
+              "owner": "AWS",
+              "version": "1",
+              "provider": "CloudFormation"
+            },
+            "configuration": {
+              "ActionMode": "CHANGE_SET_REPLACE",
+              "ChangeSetName": "Changeset1",
+              "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R",
+              "StackName": "cb-lambda-pipeline-app-dev",
+              "TemplateConfiguration": "SourceOutput::dev-configuration.json",
+              "TemplatePath": "BuildOutput::compiled_template.yml"
+            },
+            "runOrder": 1
+          },
+          {
+            "name": "ExecuteChangeSet",
+            "actionTypeId": {
+              "category": "Deploy",
+              "owner": "AWS",
+              "version": "1",
+              "provider": "CloudFormation"
+            },
+            "outputArtifacts": [],
+            "configuration": {
+              "StackName": "cb-lambda-pipeline-app-dev",
+              "ActionMode": "CHANGE_SET_EXECUTE",
+              "ChangeSetName": "Changeset1"
+            },
+            "runOrder": 2
+          }
+        ]
+      },
+      {
+        "name": "QA",
+        "actions": [
+          {
+            "inputArtifacts": [
+              {
+                "name": "SourceOutput"
+              },
+              {
+                "name": "BuildOutput"
+              }
+            ],
+            "name": "CreateChangeSet",
+            "actionTypeId": {
+              "category": "Deploy",
+              "owner": "AWS",
+              "version": "1",
+              "provider": "CloudFormation"
+            },
+            "configuration": {
+              "ActionMode": "CHANGE_SET_REPLACE",
+              "ChangeSetName": "Changeset1",
+              "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R",
+              "StackName": "cb-lambda-pipeline-app-qa",
+              "TemplateConfiguration": "SourceOutput::qa-configuration.json",
+              "TemplatePath": "BuildOutput::compiled_template.yml"
+            },
+            "runOrder": 1
+          },
+          {
+            "name": "ExecuteChangeSet",
+            "actionTypeId": {
+              "category": "Deploy",
+              "owner": "AWS",
+              "version": "1",
+              "provider": "CloudFormation"
+            },
+            "outputArtifacts": [],
+            "configuration": {
+              "StackName": "dev-efc-preferencecenter-api",
+              "ActionMode": "CHANGE_SET_EXECUTE",
+              "ChangeSetName": "Changeset1"
+            },
+            "runOrder": 2
+          }
+        ]
+      }
+    ],
+    "artifactStore": {
+      "type": "S3",
+      "location": "cb-lambda-pipeline-artifacts"
+    },
+    "name": "cb-lambda-pipeline",
+    "version": 8
+  }
+}

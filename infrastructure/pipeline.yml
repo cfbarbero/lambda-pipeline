@@ -16,7 +16,6 @@ Parameters:
     Default: cfbarbero
   SourceOAuthToken:
     Type: String
-    Default: e37d6debac65b7e585173eecfd76e5055ec40321
 Resources:
   ArtifactsBucket:
     Type: AWS::S3::Bucket

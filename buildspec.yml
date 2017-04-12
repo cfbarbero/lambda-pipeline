@@ -4,9 +4,10 @@ phases:
   install:
     commands:
       - pip install -r requirements.txt -t app
+      - aws cloudformation package --template-file samTemplate.yaml --s3-bucket cb-sam-test 
+                                   --output-template-file compiled_template.yaml
 
 artifacts:
-  base-directory: app
-  files:
-    - '**/*'
   type: zip
+  files:
+    - compiled_template.yaml
