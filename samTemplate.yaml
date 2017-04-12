@@ -15,4 +15,8 @@ Resources:
         - { ProjectName: !Ref ProjectName, Environment: !Ref Environment }
       Handler: main.handler
       Runtime: python2.7
-      CodeUri: ./app      
+      CodeUri: ./app  
+      Timeout: 10    
+      Environment:
+        Variables:
+          env: !Ref Environment

@@ -130,6 +130,7 @@
               "ActionMode": "CHANGE_SET_REPLACE",
               "ChangeSetName": "Changeset1",
               "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R",
+              "Capabilities": "CAPABILITY_IAM",
               "StackName": "cb-lambda-pipeline-app-qa",
               "TemplateConfiguration": "SourceOutput::infrastructure/qa-stack-configuration.json",
               "TemplatePath": "BuildOutput::compiled_template.yaml"
@@ -146,7 +147,7 @@
             },
             "outputArtifacts": [],
             "configuration": {
-              "StackName": "dev-efc-preferencecenter-api",
+              "StackName": "cb-lambda-pipeline-app-qa",
               "ActionMode": "CHANGE_SET_EXECUTE",
               "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R",
               "Capabilities": "CAPABILITY_IAM",
