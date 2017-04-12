@@ -11,7 +11,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Sub 
-        - '${ProjectName}-lambda-${Environment}'
+        - '${ProjectName}-lambda-${Environment}-1'
         - { ProjectName: !Ref ProjectName, Environment: !Ref Environment }
       Handler: main.handler
       Runtime: python2.7

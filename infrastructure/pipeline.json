@@ -80,6 +80,7 @@
               "ActionMode": "CHANGE_SET_REPLACE",
               "ChangeSetName": "Changeset1",
               "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R",
+              "Capabilities": "CAPABILITY_IAM",
               "StackName": "cb-lambda-pipeline-app-dev",
               "TemplateConfiguration": "SourceOutput::infrastructure/dev-stack-configuration.json",
               "TemplatePath": "BuildOutput::compiled_template.yaml"
@@ -98,7 +99,9 @@
             "configuration": {
               "StackName": "cb-lambda-pipeline-app-dev",
               "ActionMode": "CHANGE_SET_EXECUTE",
-              "ChangeSetName": "Changeset1"
+              "ChangeSetName": "Changeset1",
+              "Capabilities": "CAPABILITY_IAM",
+              "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R"
             },
             "runOrder": 2
           }
@@ -145,6 +148,8 @@
             "configuration": {
               "StackName": "dev-efc-preferencecenter-api",
               "ActionMode": "CHANGE_SET_EXECUTE",
+              "RoleArn": "arn:aws:iam::195702235524:role/cb-lambda-pipeline-CloudFormationRole-3AFAR9FFAE6R",
+              "Capabilities": "CAPABILITY_IAM",
               "ChangeSetName": "Changeset1"
             },
             "runOrder": 2
